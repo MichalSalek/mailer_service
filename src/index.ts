@@ -66,3 +66,7 @@ app.post('/send', async ({body}: Request<SendEmailPayload>, res: Response): Prom
 
     res.status(200).send('OK')
 })
+
+app.get('/', async (_, res: Response): Promise<void> => {
+    res.status(200).send('ok');
+})

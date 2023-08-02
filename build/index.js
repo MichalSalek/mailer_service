@@ -16,9 +16,9 @@ if (!process.env.PORT ||
 }
 var PORT = parseInt(process.env.PORT, 10);
 var app = (0, express_1.default)();
-// const corsWhitelistArray: string[] = process.env.CORS_WHITELIST.split(',')
+var corsWhitelistArray = process.env.CORS_WHITELIST.split(',');
 app.use((0, cors_1.default)({
-    origin: '*',
+    origin: corsWhitelistArray,
     'optionsSuccessStatus': 200
 }));
 app.use((0, helmet_1.default)());
