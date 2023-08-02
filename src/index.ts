@@ -30,13 +30,14 @@ const app = express()
 
 
 const corsWhitelistArray: string[] = process.env.CORS_WHITELIST.split(',')
+const isAllowOrigin = corsWhitelistArray[0] === '*'
+const corsOptions = {
+    origin: corsWhitelistArray,
+    'optionsSuccessStatus': 200
+}
 
-app.use(cors(
-    {
-        origin: corsWhitelistArray,
-        'optionsSuccessStatus': 200
-    }
-))
+app.use(cors(isAllowOrigin ? undefined : corsOptions))
+
 
 app.use(helmet())
 app.use(express.json())
