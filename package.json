@@ -4,7 +4,10 @@
   "description": "standalone service to sending emails",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
+    "dev": "yarn && ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+    "cleanup": "rm -rf ./build",
+    "build": "yarn cleanup && yarn && tsc --project tsconfig.json",
+    "build:npx": "yarn cleanup && yarn && npx tsc --project tsconfig.json"
   },
   "author": "MichalSalek (contact@michalsalek.com)",
   "license": "BSD-1-Clause",
