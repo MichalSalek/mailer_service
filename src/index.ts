@@ -7,10 +7,7 @@ import { SendEmailPayload } from './IO.types'
 
 
 
-
 dotenv.config()
-
-
 
 if (!process.env.PORT ||
     !process.env.SENDGRID_API_KEY ||
@@ -20,14 +17,9 @@ if (!process.env.PORT ||
     process.exit(1)
 }
 
-
-
-
-const PORT: number = parseInt(process.env.PORT as string, 10)
-
 const app = express()
 
-
+const PORT: number = parseInt(process.env.PORT as string, 10)
 
 const corsWhitelistArray: string[] = process.env.CORS_WHITELIST.split(',')
 const isAllowOrigin = corsWhitelistArray[0] === '*'
@@ -36,9 +28,8 @@ const corsOptions = {
     'optionsSuccessStatus': 200
 }
 
+
 app.use(cors(isAllowOrigin ? undefined : corsOptions))
-
-
 app.use(helmet())
 app.use(express.json())
 
@@ -69,5 +60,5 @@ app.post('/send', async ({body}: Request<SendEmailPayload>, res: Response): Prom
 })
 
 app.get('/', async (_, res: Response): Promise<void> => {
-    res.status(200).send('ok');
+    res.status(200).send('OK');
 })

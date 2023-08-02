@@ -8,3 +8,5 @@ Mailer microservice in node.js - layer for sending emails with TypeScript interf
 #### Do not forget
 
 To copy `.env.example` file to `.env` and configure it.
+
+For sandbox purposes: `CORS_WHITELIST=*`
