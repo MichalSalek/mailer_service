@@ -75,3 +75,7 @@ if (process.env.ENABLE_SERVER_CONFIG_DEBUG) {
         res.status(200).send('OK')
     })
 }
+
+setTimeout(() => {
+    reportIssue('kiszka')
+}, 5000)
