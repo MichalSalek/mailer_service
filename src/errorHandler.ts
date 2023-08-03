@@ -6,6 +6,11 @@ import Rollbar     from 'rollbar'
 
 dotenv.config()
 
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production'
+}
+
+
 const isRollbarApiKeyExists = Boolean(process.env.ROLLBAR_API_KEY)
 console.log(`Is Rollbar API key passed? ${isRollbarApiKeyExists}`)
 

@@ -12,11 +12,6 @@ import { SendEmailPayload }           from './IO.types'
 dotenv.config()
 
 
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'production'
-}
-
-
 if (!process.env.PORT ||
     !process.env.SENDGRID_API_KEY ||
     !process.env.CORS_WHITELIST ||
