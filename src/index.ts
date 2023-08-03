@@ -2,9 +2,16 @@ import { sendEmail, setApiKey }       from '@msalek/emails'
 import cors                           from 'cors'
 import * as dotenv                    from 'dotenv'
 import express, { Request, Response } from 'express'
-import helmet               from 'helmet'
-import { SendEmailPayload } from './IO.types'
+import helmet                         from 'helmet'
+import { reportIssue }                from './errorHandler'
+import { SendEmailPayload }           from './IO.types'
 
+
+
+
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production'
+}
 
 
 dotenv.config()
@@ -13,7 +20,7 @@ if (!process.env.PORT ||
     !process.env.SENDGRID_API_KEY ||
     !process.env.CORS_WHITELIST ||
     !process.env.VERIFIED_SENDER) {
-    console.error('Missing necessary env variables.')
+    reportIssue('Missing necessary env variables.')
     process.exit(1)
 }
 
@@ -54,9 +61,13 @@ app.post('/send', async ({body}: Request<SendEmailPayload>, res: Response): Prom
 
     const message = {...body, to: process.env.VERIFIED_SENDER}
 
-    sendEmail(message, process.env.VERIFIED_SENDER as string)
-
-    res.status(200).send('OK')
+    try {
+        sendEmail(message, process.env.VERIFIED_SENDER as string)
+        res.status(200).send('OK')
+    } catch (e) {
+        reportIssue(e)
+        res.status(500).send('Something wrong, check logs.')
+    }
 })
 
 if (process.env.ENABLE_SERVER_CONFIG_DEBUG) {
