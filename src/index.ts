@@ -24,7 +24,7 @@ const PORT: number = parseInt(process.env.PORT as string, 10)
 const corsWhitelistArray: string[] = process.env.CORS_WHITELIST.split(',')
 const isWildcardAllowOrigin = corsWhitelistArray[0] === '*'
 const corsOptions = {
-    origin: isWildcardAllowOrigin ? undefined : corsWhitelistArray,
+    origin: isWildcardAllowOrigin ? '*' : corsWhitelistArray,
     'optionsSuccessStatus': 200
 }
 
