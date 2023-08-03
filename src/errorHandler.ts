@@ -1,5 +1,6 @@
 import Rollbar from 'rollbar'
 
+console.log(process.env)
 
 const isRollbarActive = Boolean(process.env.ROLLBAR_API_KEY)
 console.log(`Is Rollbar active? ${isRollbarActive}`)
