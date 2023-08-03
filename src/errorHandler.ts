@@ -23,7 +23,7 @@ export const reportIssue = (msg: any, type: 'log' | 'warn' | 'error' = 'error'):
 
     console[type](msg)
 
-    if (process.env.NODE_ENV === 'production' && isRollbarApiKeyExists) {
+    if (process.env.NODE_ENV === 'production' && isRollbarAlive) {
         (rollbar as Rollbar)[type](msg)
     }
 }
