@@ -22,14 +22,14 @@ const app = express()
 const PORT: number = parseInt(process.env.PORT as string, 10)
 
 const corsWhitelistArray: string[] = process.env.CORS_WHITELIST.split(',')
-const isAllowOrigin = corsWhitelistArray[0] === '*'
+const isWildcardAllowOrigin = corsWhitelistArray[0] === '*'
 const corsOptions = {
-    origin: corsWhitelistArray,
+    origin: isWildcardAllowOrigin ? undefined : corsWhitelistArray,
     'optionsSuccessStatus': 200
 }
 
 
-app.use(cors(isAllowOrigin ? undefined : corsOptions))
+app.use(cors(corsOptions))
 app.use(helmet())
 app.use(express.json())
 
@@ -59,6 +59,8 @@ app.post('/send', async ({body}: Request<SendEmailPayload>, res: Response): Prom
     res.status(200).send('OK')
 })
 
-app.get('/', async (_, res: Response): Promise<void> => {
-    res.status(200).send('OK');
-})
+if (process.env.ENABLE_SERVER_CONFIG_DEBUG) {
+    app.get('/', async (_, res: Response): Promise<void> => {
+        res.status(200).send('OK')
+    })
+}
