@@ -22,7 +22,7 @@ export const saveEmailToFile = ({subject, text, replyTo}: SendEmailPayload): voi
     const content = `subject: ${subject}     text: ${text}     replyTo: ${replyTo}`
 
     fs.writeFile(
-        path.resolve(__dirname, dir + getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' ' + subject + '.txt')
+        path.resolve(__dirname, dir + getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
         ,
         content, (err) => {
             reportIssue(err)
