@@ -1,3 +1,5 @@
 node_modules
 .env
 .idea
+saved_emails/*
+!saved_emails/.gitkeep
