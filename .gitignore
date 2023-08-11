@@ -3,6 +3,4 @@ node_modules
 .idea
 saved_emails/*
 !saved_emails/.gitkeep
-
-
-.idea
+src/messages-body/**/
