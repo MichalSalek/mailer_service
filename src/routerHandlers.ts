@@ -1,40 +1,11 @@
-import { sendEmail }                                          from '@msalek/emails'
-import { Express, Request, Response }                         from 'express'
-import { saveEmailToFile }                                    from './emailToFileSaver'
-import { reportIssue }                                        from './errorHandler'
-import { SendEmailPayloadInputDTO }                           from './IO.types'
-import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-body/messageBody'
+import { Express, Request, Response }                        from 'express'
+import { handleSendFeedbackToSender, handleSendMainMessage } from './commands'
+import { saveEmailToFile }                                   from './emailToFileSaver'
+import { reportIssue }                                       from './errorHandler'
+import { SendEmailPayload }                                  from './internal.types'
+import { SendEmailPayloadInputDTO }                          from './IO.types'
 
 
-
-
-export type SendEmailPayload =
-    SendEmailPayloadInputDTO & {
-    fromSite: string
-}
-
-const handleSendMainMessage = async (payload: SendEmailPayload): Promise<void> => {
-    try {
-        return await sendEmail(
-            getMainMessageBody(payload),
-            process.env.VERIFIED_SENDER as string)
-    } catch (e) {
-        reportIssue('handleSendMainMessage FAILED: ' +
-            JSON.stringify(e))
-    }
-}
-
-
-const handleSendFeedbackToSender = async (payload: SendEmailPayload): Promise<void> => {
-    try {
-        return await sendEmail(
-            getFeedbackToSenderMessageBody(payload),
-            process.env.VERIFIED_SENDER as string)
-    } catch (e) {
-        reportIssue('handleSendFeedbackToSender FAILED: ' +
-            JSON.stringify(e))
-    }
-}
 
 
 export const routerHandlers = (app: Express): void => {

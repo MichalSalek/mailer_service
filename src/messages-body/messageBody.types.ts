@@ -1,5 +1,5 @@
-import { SendEmail } from '@msalek/emails'
-import { SendEmailPayload } from '../routerHandlers'
+import { SendEmail }        from '@msalek/emails'
+import { SendEmailPayload } from '../internal.types'
 
 
 

@@ -2,16 +2,14 @@ import { getDateNowInString } from '@msalek/utils'
 import fs                     from 'fs'
 import { resolve }            from 'path'
 import { reportIssue }        from './errorHandler'
-import { SendEmailPayload }   from './routerHandlers'
+import { SendEmailPayload }   from './internal.types'
 
 
 
 
 export const saveEmailToFile = ({subject, text, replyTo, signature, fromSite}: SendEmailPayload): void => {
-
     try {
         const emailsDir = resolve(__dirname, '../saved_emails', encodeURIComponent(fromSite))
-
 
         if (!fs.existsSync(emailsDir)) {
             fs.mkdirSync(emailsDir, {recursive: true})
