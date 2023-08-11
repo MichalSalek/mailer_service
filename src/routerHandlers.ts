@@ -1,31 +1,47 @@
-import { SendEmail, sendEmail }        from '@msalek/emails'
-import { Express, Request, Response }  from 'express'
-import { saveEmailToFile }             from './emailToFileSaver'
-import { reportIssue }                    from './errorHandler'
-import { getFeedbackToSenderMessageBody } from './feedbackToSenderMessageBody'
-import { SendEmailPayload }               from './IO.types'
+import { sendEmail }                                          from '@msalek/emails'
+import { Express, Request, Response }                         from 'express'
+import { saveEmailToFile }                                    from './emailToFileSaver'
+import { reportIssue }                                        from './errorHandler'
+import { SendEmailPayloadInputDTO }                           from './IO.types'
+import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-body/michalsalek_com/messageBody'
 
 
 
 
-const handleSendFeedbackToSender = async ({text, subject, replyTo}: SendEmailPayload, VERIFIED_SENDER: string): Promise<void> => {
+export type SendEmailPayload =
+    SendEmailPayloadInputDTO & {
+    fromSite: string
+}
+
+const handleSendMainMessage = async (payload: SendEmailPayload): Promise<void> => {
     try {
         return await sendEmail(
-            {...getFeedbackToSenderMessageBody({text, subject}), to: replyTo},
-            VERIFIED_SENDER)
+            getMainMessageBody(payload),
+            process.env.VERIFIED_SENDER as string)
+    } catch (e) {
+        reportIssue('handleSendMainMessage FAILED: ' +
+            JSON.stringify(e))
+    }
+}
+
+
+const handleSendFeedbackToSender = async (payload: SendEmailPayload): Promise<void> => {
+    try {
+        return await sendEmail(
+            getFeedbackToSenderMessageBody(payload),
+            process.env.VERIFIED_SENDER as string)
     } catch (e) {
         reportIssue('handleSendFeedbackToSender FAILED: ' +
             JSON.stringify(e))
     }
-
 }
 
 
 export const routerHandlers = (app: Express): void => {
 
 
-
-    app.post('/send', async ({body}: Request<SendEmailPayload>, res: Response): Promise<void> => {
+    app.post('/send', async (req: Request<SendEmailPayloadInputDTO>, res: Response): Promise<void> => {
+        const {body} = req
 
         if (!body?.subject || !body?.text) {
             const errorText = `Mail cannot be send. Missing subject: ${typeof body?.subject} or text: ${body?.text}}`
@@ -34,15 +50,18 @@ export const routerHandlers = (app: Express): void => {
             return void undefined
         }
 
-        const message: SendEmailPayload & { to: SendEmail['to'] } = {...body, to: process.env.VERIFIED_SENDER}
+        const payload: SendEmailPayload = {
+            ...body,
+            fromSite: req.get('referer')
+        }
 
-        saveEmailToFile(message)
+        void saveEmailToFile(payload)
 
         try {
-            await sendEmail(message,
-                process.env.VERIFIED_SENDER as string)
 
-            await handleSendFeedbackToSender(message, process.env.VERIFIED_SENDER as string)
+            await handleSendMainMessage(payload)
+
+            await handleSendFeedbackToSender(payload)
 
             res.status(200).send('OK')
         } catch (e) {

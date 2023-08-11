@@ -1,31 +1,32 @@
 import { getDateNowInString } from '@msalek/utils'
 import fs                     from 'fs'
-import path                   from 'path'
+import { resolve }            from 'path'
 import { reportIssue }        from './errorHandler'
-import { SendEmailPayload }   from './IO.types'
+import { SendEmailPayload }   from './routerHandlers'
 
 
 
 
-export const saveEmailToFile = ({subject, text, replyTo}: SendEmailPayload): void => {
-
-    const dir = '../saved_emails/'
+export const saveEmailToFile = ({subject, text, replyTo, signature, fromSite}: SendEmailPayload): void => {
 
     try {
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
+        const emailsDir = resolve(__dirname, '../saved_emails', encodeURIComponent(fromSite))
+
+
+        if (!fs.existsSync(emailsDir)) {
+            fs.mkdirSync(emailsDir, {recursive: true})
         }
+
+        const content = `subject: ${subject}     text: ${text}     signature: ${signature}     replyTo: ${replyTo}`
+
+        fs.writeFile(
+            resolve(emailsDir, getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
+            ,
+            content, (err) => {
+                reportIssue(err)
+            })
+
     } catch (err) {
-        console.error(err);
+        console.error(err)
     }
-
-    const content = `subject: ${subject}     text: ${text}     replyTo: ${replyTo}`
-
-    fs.writeFile(
-        path.resolve(__dirname, dir + getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
-        ,
-        content, (err) => {
-            reportIssue(err)
-        })
-
 }
