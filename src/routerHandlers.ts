@@ -3,7 +3,7 @@ import { Express, Request, Response }                         from 'express'
 import { saveEmailToFile }                                    from './emailToFileSaver'
 import { reportIssue }                                        from './errorHandler'
 import { SendEmailPayloadInputDTO }                           from './IO.types'
-import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-body/michalsalek_com/messageBody'
+import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-body/messageBody'
 
 
 
