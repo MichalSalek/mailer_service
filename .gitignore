@@ -4,4 +4,4 @@ node_modules
 saved_emails/*
 !saved_emails/.gitkeep
 src/messages-body/messageBody.ts
-
+build
