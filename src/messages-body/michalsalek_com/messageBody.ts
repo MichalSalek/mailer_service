@@ -3,7 +3,7 @@ import { MessageBodyInput, MessageBodyOutput } from '../messageBody.types'
 
 
 
-export const getMainMessageBody = ({text, subject, fromSite, replyTo, signature}: MessageBodyInput): MessageBodyOutput => ({
+export const getMainMessageBody = ({text, subject, fromSite, replyTo, signature = 'Anonim'}: MessageBodyInput): MessageBodyOutput => ({
     to: process.env.VERIFIED_SENDER as string,
 
     subject: `[${fromSite}]: ${subject}`,
