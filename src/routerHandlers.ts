@@ -9,8 +9,6 @@ import { SendEmailPayloadInputDTO }                          from './IO.types'
 
 
 export const routerHandlers = (app: Express): void => {
-
-
     app.post('/send', async (req: Request<SendEmailPayloadInputDTO>, res: Response): Promise<void> => {
         const {body} = req
 
@@ -29,19 +27,15 @@ export const routerHandlers = (app: Express): void => {
         void saveEmailToFile(payload)
 
         try {
-
             await handleSendMainMessage(payload)
-
             await handleSendFeedbackToSender(payload)
-
             res.status(200).send('OK')
+
         } catch (e) {
             reportIssue(e)
             res.status(500).send('Something wrong, check logs.')
         }
     })
-
-
 
 
     if (process.env.ENABLE_SERVER_CONFIG_DEBUG) {

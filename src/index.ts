@@ -8,9 +8,7 @@ import { routerHandlers }   from './routerHandlers'
 
 
 
-
 dotenv.config()
-
 
 if (!process.env.PORT ||
     !process.env.SENDGRID_API_KEY ||
@@ -30,7 +28,6 @@ const corsOptions = {
     origin: isWildcardAllowOrigin ? '*' : corsWhitelistArray,
     'optionsSuccessStatus': 200
 }
-
 
 app.use(cors(corsOptions))
 app.use(helmet())
