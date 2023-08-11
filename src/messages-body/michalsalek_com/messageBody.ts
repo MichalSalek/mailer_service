@@ -25,7 +25,7 @@ export const getMainMessageBody = ({text, subject, fromSite, replyTo, signature}
 
 
 
-export const getFeedbackToSenderMessageBody = ({text, subject, replyTo, signature}: MessageBodyInput): MessageBodyOutput => {
+export const getFeedbackToSenderMessageBody = ({text, subject, replyTo, signature = 'Anonim'}: MessageBodyInput): MessageBodyOutput => {
 
     const nowDate: Date = new Date()
 

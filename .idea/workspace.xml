@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad8a65e2-0d8e-4498-b2cf-2c3c9839d998" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/messages-body/michalsalek_com/messageBody.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IO.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/IO.types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emailToFileSaver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/emailToFileSaver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feedbackToSenderMessageBody.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routerHandlers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routerHandlers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/messages-body/michalsalek_com/messageBody.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/messages-body/michalsalek_com/messageBody.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +61,7 @@
       <updated>1691165940766</updated>
       <workItem from="1691165941939" duration="25000" />
       <workItem from="1691179096958" duration="14502000" />
-      <workItem from="1691750730610" duration="7662000" />
+      <workItem from="1691750730610" duration="7977000" />
     </task>
     <servers />
   </component>
