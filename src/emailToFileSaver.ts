@@ -21,10 +21,12 @@ export const saveEmailToFile = ({subject, text, replyTo, signature, fromSite}: S
             resolve(emailsDir, getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
             ,
             content, (err) => {
+                reportIssue('saveEmailToFile catch:')
                 reportIssue(err)
             })
 
     } catch (err) {
+        console.error('saveEmailToFile catched errror:')
         console.error(err)
     }
 }

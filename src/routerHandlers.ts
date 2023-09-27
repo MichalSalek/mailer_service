@@ -14,7 +14,7 @@ export const routerHandlers = (app: Express): void => {
 
         if (!body?.subject || !body?.text) {
             const errorText = `Mail cannot be send. Missing subject: ${typeof body?.subject} or text: ${body?.text}}`
-            console.warn(errorText)
+            console.warn('errorText: ' + errorText)
             res.status(400).send(errorText)
             return void undefined
         }
@@ -28,10 +28,19 @@ export const routerHandlers = (app: Express): void => {
 
         try {
             await handleSendMainMessage(payload)
+            res.status(200).send('OK')
+
+        } catch (e) {
+            reportIssue('handleSendMainMessage catch:')
+            reportIssue(e)
+            res.status(500).send('Something wrong, check logs.')
+        }
+        try {
             await handleSendFeedbackToSender(payload)
             res.status(200).send('OK')
 
         } catch (e) {
+            reportIssue('handleSendFeedbackToSender catch:')
             reportIssue(e)
             res.status(500).send('Something wrong, check logs.')
         }
