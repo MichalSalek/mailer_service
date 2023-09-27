@@ -18,10 +18,13 @@ export const saveEmailToFile = ({subject, text, replyTo, signature, fromSite}: S
         const content = `subject: ${subject}     text: ${text}     signature: ${signature}     replyTo: ${replyTo}`
 
         fs.writeFile(
-            resolve(emailsDir, getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
+            resolve(
+                emailsDir,
+                getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
             ,
-            content, (err) => {
-                reportIssue('saveEmailToFile catch:')
+            content,
+            (err) => {
+                reportIssue('saveEmailToFile writeFile catch:')
                 reportIssue(err)
             })
 
