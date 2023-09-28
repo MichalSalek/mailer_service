@@ -15,21 +15,31 @@ export const saveEmailToFile = ({subject, text, replyTo, signature, fromSite}: S
             fs.mkdirSync(emailsDir, {recursive: true})
         }
 
-        const content = `subject: ${subject}     text: ${text}     signature: ${signature}     replyTo: ${replyTo}`
+        const content = `
+        subject: ${subject}
+        text: ${text}
+        signature: ${signature}
+        replyTo: ${replyTo}`
 
         fs.writeFile(
             resolve(
                 emailsDir,
-                getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt')
+                getDateNowInString({getISOFormat: false, withTimestamp: false}) + ' [' + subject + '].txt'
+            )
             ,
             content,
             (err) => {
-                reportIssue('saveEmailToFile writeFile catch:')
-                reportIssue(err)
+                if (err) {
+                    reportIssue('mailer_service: saveEmailToFile writeFile catch:')
+                    reportIssue(err)
+                } else {
+                    console.info('mailer_service: saveEmailToFile success.')
+                    console.info(content)
+                }
             })
 
     } catch (err) {
-        console.error('saveEmailToFile catched errror:')
+        console.error('mailer_service: saveEmailToFile catched errror:')
         console.error(err)
     }
 }

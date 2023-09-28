@@ -14,7 +14,7 @@ if (!process.env.PORT ||
     !process.env.SENDGRID_API_KEY ||
     !process.env.CORS_WHITELIST ||
     !process.env.VERIFIED_SENDER) {
-    reportIssue('Missing necessary env variables.')
+    reportIssue('mailer_service: Missing necessary env variables.')
     process.exit(1)
 }
 
@@ -35,7 +35,7 @@ app.use(express.json())
 
 
 app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
+    console.info(`mailer_service: Listening on port ${PORT}`)
 })
 
 
