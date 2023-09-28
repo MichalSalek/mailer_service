@@ -24,7 +24,7 @@ const rollbar = isRollbarApiKeyExists ? new Rollbar({
 const isRollbarAlive = Boolean(rollbar)
 console.info(`mailer_service: Is Rollbar alive? ${isRollbarAlive}`)
 
-export const reportIssue = (msg: any, type: 'log' | 'warn' | 'error' = 'error'): void => {
+export const reportIssue = (msg: any, type: 'log' | 'warn' | 'error' | 'info' = 'error'): void => {
     console[type](msg)
     if (isRollbarAlive) {
         (rollbar as Rollbar)[type](msg)

@@ -1,9 +1,9 @@
-import { Express, Request, Response }                                           from 'express'
-import { handleReportIssue, handleSendFeedbackToSender, handleSendMainMessage } from './commands'
-import { saveEmailToFile }                                                      from './emailToFileSaver'
-import { reportIssue }                                                          from './errorHandler'
-import { SendEmailPayload }                                                     from './internal.types'
-import { SendEmailPayloadInputDTO }                                             from './IO.types'
+import { Express, Request, Response }                                                        from 'express'
+import { sendFeedbackToSender_COMMAND, sendMainMessage_COMMAND, triggerReportIssue_COMMAND } from './commands'
+import { saveEmailToFile }                                                                   from './emailToFileSaver'
+import { reportIssue }                                                                       from './errorHandler'
+import { SendEmailPayload }                                                                  from './internal.types'
+import { SendEmailPayloadInputDTO }                                                          from './IO.types'
 
 
 
@@ -30,21 +30,12 @@ export const routerHandlers = (app: Express): void => {
 
 
         try {
-            await handleSendMainMessage(payload)
+            await sendMainMessage_COMMAND(payload)
+            await sendFeedbackToSender_COMMAND(payload)
             res.status(200).send('OK')
 
         } catch (e) {
-            reportIssue('handleSendMainMessage catch:')
-            reportIssue(e)
-            res.status(500).send('Something wrong.')
-        }
-
-        try {
-            await handleSendFeedbackToSender(payload)
-            res.status(200).send('OK')
-
-        } catch (e) {
-            reportIssue('handleSendFeedbackToSender catch:')
+            reportIssue('mailer_service: /send route failed. Catch:')
             reportIssue(e)
             res.status(500).send('Something wrong.')
         }
@@ -52,7 +43,7 @@ export const routerHandlers = (app: Express): void => {
         // Side effects
         //
         void saveEmailToFile(payload)
-        void handleReportIssue(payload)
+        void triggerReportIssue_COMMAND(payload)
     })
 
 

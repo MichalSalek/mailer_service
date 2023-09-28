@@ -6,7 +6,7 @@ import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-b
 
 
 
-export const handleSendMainMessage = async (payload: SendEmailPayload): Promise<void> => {
+export const sendMainMessage_COMMAND = async (payload: SendEmailPayload): Promise<void> => {
     try {
         return await sendEmail(
             getMainMessageBody(payload),
@@ -19,7 +19,7 @@ export const handleSendMainMessage = async (payload: SendEmailPayload): Promise<
 }
 
 
-export const handleSendFeedbackToSender = async (payload: SendEmailPayload): Promise<void> => {
+export const sendFeedbackToSender_COMMAND = async (payload: SendEmailPayload): Promise<void> => {
     try {
         return await sendEmail(
             getFeedbackToSenderMessageBody(payload),
@@ -33,9 +33,9 @@ export const handleSendFeedbackToSender = async (payload: SendEmailPayload): Pro
 
 
 
-export const handleReportIssue = async (payload: SendEmailPayload): Promise<void> => {
+export const triggerReportIssue_COMMAND = async (payload: SendEmailPayload): Promise<void> => {
     if (payload.subject === process.env.REPORT_ISSUE_SECRET_SUBJECT) {
-        reportIssue('mailer_service: handleSendFeedbackToSender failed.')
+        reportIssue('mailer_service: Triggering of test issue...', 'info')
         reportIssue(payload)
     }
 }
