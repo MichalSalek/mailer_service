@@ -34,10 +34,15 @@ export const sendFeedbackToSender_COMMAND = async (payload: SendEmailPayload): P
 
 
 export const triggerReportIssue_COMMAND = async (payload: SendEmailPayload): Promise<void> => {
-    if (payload.subject === process.env.REPORT_ISSUE_SECRET_SUBJECT) {
+    if (!payload.subject) {
+        return void undefined
+    }
+     if (!process.env.REPORT_ISSUE_SECRET_SUBJECT) {
+        return void undefined
+    }
+
+    if (String(payload.subject) === String(process.env.REPORT_ISSUE_SECRET_SUBJECT)) {
         reportIssue('mailer_service: Triggering of test issue...', 'info')
         reportIssue(payload)
     }
 }
-
-
