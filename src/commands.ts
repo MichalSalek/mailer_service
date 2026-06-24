@@ -1,7 +1,7 @@
-import { sendEmail }                                          from '@msalek/emails'
 import { reportIssue }                                        from './errorHandler'
 import { SendEmailPayload }                                   from './internal.types'
 import { getFeedbackToSenderMessageBody, getMainMessageBody } from './messages-body/messageBody'
+import { sendEmail }                                          from './sender'
 
 
 

@@ -1,17 +1,17 @@
-import { setApiKey }        from '@msalek/emails'
 import cors                 from 'cors'
 import * as dotenv          from 'dotenv'
 import express, { Express } from 'express'
 import helmet               from 'helmet'
 import { reportIssue }      from './errorHandler'
 import { routerHandlers }   from './routerHandlers'
+import { setApiKey }        from './sender'
 
 
 
 dotenv.config()
 
 if (!process.env.PORT ||
-    !process.env.SENDGRID_API_KEY ||
+    !process.env.RESEND_API_KEY ||
     !process.env.CORS_WHITELIST ||
     !process.env.VERIFIED_SENDER) {
     reportIssue('mailer_service: Missing necessary env variables.')
@@ -39,7 +39,7 @@ app.listen(PORT, () => {
 })
 
 
-setApiKey(process.env.SENDGRID_API_KEY)
+setApiKey(process.env.RESEND_API_KEY)
 
 
 routerHandlers(app)

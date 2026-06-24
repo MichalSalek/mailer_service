@@ -1,4 +1,4 @@
-import { SendEmail } from '@msalek/emails'
+import { SendEmail } from './sender'
 
 
 
